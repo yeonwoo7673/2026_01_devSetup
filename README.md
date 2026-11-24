@@ -38,11 +38,11 @@ VERSION_ID="26.04"
 - [x] Docker 기본 운영 명령 (`images`, `ps`, `ps -a`, `logs`, `stats`)
 - [x] hello-world 실행
 - [x] ubuntu 컨테이너 진입 + attach/exec 차이 정리
-- [ ] Dockerfile 커스텀 이미지 빌드/실행
-- [ ] 포트 매핑 접속 (2회: 8080, 8081)
-- [ ] 바인드 마운트 반영
-- [ ] 볼륨 영속성
-- [ ] Git 설정 + VSCode GitHub 연동 ← VSCode 캡처 필요
+- [x] Dockerfile 커스텀 이미지 빌드/실행
+- [x] 포트 매핑 접속 (2회: 8080, 8081)
+- [x] 바인드 마운트 반영
+- [x] 볼륨 영속성
+- [x] Git 설정 + VSCode GitHub 연동 ← VSCode 캡처 필요
 
 ## 4. 검증 방법 및 증거
 | 항목 | 검증 명령 | 확인 내용 | 증거 위치 |
@@ -52,20 +52,20 @@ VERSION_ID="26.04"
 | 권한 (파일) | `ls -l` → `chmod 755` → `ls -l` | `-rw-r--r--`(644) → `-rwxr-xr-x`(755) | [6. 권한 실습](#6-권한-실습), [캡처5](docs/images/03.권한%20실습.png) |
 | 권한 (디렉토리) | `ls -ld` → `chmod 700` → `ls -ld` | `drwxr-xr-x`(755) → `drwx------`(700) | [6. 권한 실습](#6-권한-실습), [캡처5](docs/images/03.권한%20실습.png) |
 | Docker 설치 | `docker --version` | `Docker version 29.9.3` 출력 | [7. Docker 점검](#7-docker-설치-및-기본-점검), [캡처6](docs/images/04-1.Docker설치%20및%20기본%20점검.png) |
-| 데몬 동작 | `docker info` | Server 섹션 출력 (`Server Version: 29.9.3`, `OSType: linux`) | [7. Docker 점검](#7-docker-설치-및-기본-점검), [캡처7](docs/images/04-2.Docker설치%20및%20기본%20점검.png), [캡처8](docs/images/04-3.Docker설치%20및%20기본%20점검.png |
+| 데몬 동작 | `docker info` | Server 섹션 출력 (`Server Version: 29.9.3`, `OSType: linux`) | [7. Docker 점검](#7-docker-설치-및-기본-점검), [캡처7](docs/images/04-2.Docker설치%20및%20기본%20점검.png), [캡처8](docs/images/04-3.Docker설치%20및%20기본%20점검.png) |
 | hello-world | `docker run hello-world` | `Hello from Docker!` 출력 | [8. 운영 명령](#8-docker-기본-운영-명령), [캡처9](docs/images/05.Docker%20hello-world.png) |
 | 이미지 관리 | `docker pull ubuntu`, `docker images` | `hello-world`, `ubuntu` 이미지 목록 | [8. 운영 명령](#8-docker-기본-운영-명령), [캡처10](docs/images/06-1.Docker%20pull%20ubuntu,%20images.png) |
-| 컨테이너 상태 | `docker ps`, `docker ps -a` | 실행 중(Up) / 종료(Exited) 구분 | [8. 운영 명령](#8-docker-기본-운영-명령), [캡처11](docs/images/06-2.Docker%20ps.png), [캡처12](docs/images/06-3.Docker%20ps%20-a.png |
+| 컨테이너 상태 | `docker ps`, `docker ps -a` | 실행 중(Up) / 종료(Exited) 구분 | [8. 운영 명령](#8-docker-기본-운영-명령), [캡처11](docs/images/06-2.Docker%20ps.png), [캡처12](docs/images/06-3.Docker%20ps%20-a.png) |
 | 로그 확인 | `docker logs yeonwoo` | 컨테이너 터미널 출력 기록 | [8. 운영 명령](#8-docker-기본-운영-명령), [캡처13](docs/images/06-4.Docker%20logs%20yeonwoo.png) |
 | 리소스 확인 | `docker stats --no-stream` | 컨테이너별 CPU·메모리 사용량 | [8. 운영 명령](#8-docker-기본-운영-명령), [캡처14](docs/images/06-5.Docker%20stats%20--no-stream.png) |
 | ubuntu 컨테이너 | `docker run -it --name yeonwoo ubuntu bash` → `ls`, `echo` | 컨테이너 내부 명령 실행 결과 | [9. 컨테이너 실습](#9-컨테이너-실행-실습-ubuntu), [캡처15](docs/images/07-1.Docker%20run%20-it%20--name%20yeonwoo%20ubuntu%20bash.png) |
 | attach vs exec | `exec` → `exit` → `docker ps` / `attach` → `exit` → `docker ps -a` | exec 종료 후 Up 유지, attach 종료 후 Exited | [9. 컨테이너 실습](#9-컨테이너-실행-실습-ubuntu), [캡처16](docs/images/07-2.exec,%20exit,%20docker%20ps.png), [캡처17](docs/images/07-3.attach,%20exit,%20docker%20ps%20-a.png) |
 | 커스텀 이미지 | `docker build -t my-web:1.0 .`, `docker images` | `my-web:1.0` 이미지 생성 | [10. Dockerfile](#10-dockerfile-커스텀-이미지), [캡처18](docs/images/08.Docker%20custom%20image.png) |
-| 포트 매핑 | `curl localhost:8080`, `curl localhost:8081`, 브라우저 접속 | 두 포트 모두 같은 페이지 응답 | [11. 포트 매핑](#11-포트-매핑-접속), [8080 캡처](docs/images/09-1.8080%20port.png), [8081캡처](docs/images/09-2.8081%20port.png), [docker ps](docs/images/09-3.docker%20ps.png) |
-| 바인드 마운트 | 호스트 `site/index.html` 수정 전·후 `curl` | 재빌드 없이 변경 반영 | [12. 바인드 마운트](#12-바인드-마운트-반영) |
+| 포트 매핑 | `curl localhost:8080`, `curl localhost:8081`, 브라우저 접속 | 두 포트 모두 같은 페이지 응답 | [11. 포트 매핑](#11-포트-매핑-접속), [8080 캡처](docs/images/09-1.8080%20port.png), [8081 캡처](docs/images/09-2.8081%20port.png), [docker ps](docs/images/09-3.docker%20ps.png) |
+| 바인드 마운트 | 호스트 `site/index.html` 수정 전·후 `curl` | 재빌드 없이 변경 반영 | [12. 바인드 마운트](#12-바인드-마운트-반영), [캡처19](docs/images/10.bind%20mount.png) |
 | 볼륨 영속성 | 컨테이너 삭제 후 새 컨테이너에서 `cat /data/hello.txt` | 삭제 후에도 데이터 유지 | [13. 볼륨](#13-볼륨-영속성) |
 | Git 설정 | `git config --list` | `user.name`, `user.email`(마스킹), `init.defaultbranch=main` | [14. Git](#14-git-설정-및-github-연동) |
-| GitHub 연동 | `git remote -v`, `git push origin main`, VSCode 계정 | push 성공(`main -> main`), VSCode GitHub 로그인 | [14. Git](#14-git-설정-및-github-연동), [VSCode 캡처](docs/images/vscode-github.png) |
+| GitHub 연동 | `git remote -v`, `git push origin main`, VSCode 계정 | push 성공(`main -> main`), VSCode GitHub 로그인 | [14. Git](#14-git-설정-및-github-연동), [VSCode 캡처](docs/images/12-1.vscode-gitHub.png), [git remove -v, git status](docs/images/12-2.git%20remote%20-v,%20git%20status.png), [git add, commit, push origin main](docs/images/12-3.git%20add,%20commit,%20push%20origin%20main.png) |
 
 ## 5. 터미널 조작 로그
 ```bash
@@ -397,45 +397,29 @@ EXPOSE 80
 | `EXPOSE 80` | 컨테이너가 사용하는 포트 문서화 |
 
 ```bash
-user@4F-73:~/codyssey$ docker build -t my-web:1.0 .
-[+] Building 6.4s (8/8) FINISHED                                 docker:default
+user@4F-73:~/codyssey/2026_01_devSetup$ docker build -t my-web:1.0 .
+[+] Building 1.5s (8/8) FINISHED                                 docker:default
  => [internal] load build definition from Dockerfile                       0.0s
  => => transferring dockerfile: 177B                                       0.0s
- => [internal] load metadata for docker.io/library/nginx:alpine            2.1s
+ => [internal] load metadata for docker.io/library/nginx:alpine            1.2s
  => [auth] library/nginx:pull token for registry-1.docker.io               0.0s
  => [internal] load .dockerignore                                          0.0s
  => => transferring context: 2B                                            0.0s
  => [internal] load build context                                          0.0s
  => => transferring context: 152B                                          0.0s
- => [1/2] FROM docker.io/library/nginx:alpine@sha256:b50897d5c7b1aa08067c  3.2s
+ => [1/2] FROM docker.io/library/nginx:alpine@sha256:b50897d5c7b1aa08067c  0.0s
  => => resolve docker.io/library/nginx:alpine@sha256:b50897d5c7b1aa08067c  0.0s
- => => sha256:e5f8fe67c1e12b44e2c94d2a3d28ab9dc50d18231 20.54MB / 20.54MB  2.7s
- => => sha256:3623869d224d7166e17864edf35efe7a597df1f3a04 1.40kB / 1.40kB  0.4s
- => => sha256:e9820988621b9d4f3f959b73badb1d607f93da221e4 1.21kB / 1.21kB  0.6s
- => => sha256:85b05bfd25bc068837a4ecb73f940ce6252369eea7cd8c3 404B / 404B  0.6s
- => => sha256:96001c9779a126dfde151a983697b92e22f24f24d05f8af 964B / 964B  0.2s
- => => sha256:fbbe454312b97bc348f30147303ed234da7a58f6ccda9c7 629B / 629B  0.2s
- => => sha256:272cbe758287982b2c7b62a27569df2d74716fdea81 4.42MB / 4.42MB  1.0s
- => => sha256:881fc932939efef04ca120ad44bbd2c0917851eb247 3.85MB / 3.85MB  1.1s
- => => extracting sha256:881fc932939efef04ca120ad44bbd2c0917851eb247aa499  0.1s
- => => extracting sha256:272cbe758287982b2c7b62a27569df2d74716fdea812b4b3  0.2s
- => => extracting sha256:fbbe454312b97bc348f30147303ed234da7a58f6ccda9c7d  0.0s
- => => extracting sha256:96001c9779a126dfde151a983697b92e22f24f24d05f8afb  0.0s
- => => extracting sha256:85b05bfd25bc068837a4ecb73f940ce6252369eea7cd8c36  0.0s
- => => extracting sha256:e9820988621b9d4f3f959b73badb1d607f93da221e42eb4a  0.0s
- => => extracting sha256:3623869d224d7166e17864edf35efe7a597df1f3a04e68d1  0.0s
- => => extracting sha256:e5f8fe67c1e12b44e2c94d2a3d28ab9dc50d18231a774cb5  0.3s
- => [2/2] COPY site/ /usr/share/nginx/html/                                0.1s
- => exporting to image                                                     0.8s
- => => exporting layers                                                    0.1s
+ => CACHED [2/2] COPY site/ /usr/share/nginx/html/                         0.0s
+ => exporting to image                                                     0.1s
+ => => exporting layers                                                    0.0s
  => => exporting manifest sha256:ef5d79603d9d7f5a0726e84f00aff28266f8fe91  0.0s
  => => exporting config sha256:aedcb3f9e1013299f65162c1bfbe441d84b763b2a5  0.0s
- => => exporting attestation manifest sha256:0a00479275ba194837641c5d79ba  0.0s
- => => exporting manifest list sha256:709489a54fa4a50fca5029412ac7ba0e757  0.0s
+ => => exporting attestation manifest sha256:95bd1e0b6381b6bf174272df77f7  0.0s
+ => => exporting manifest list sha256:f1cdfeba2cd966fb735928043b2c0748fdd  0.0s
  => => naming to docker.io/library/my-web:1.0                              0.0s
- => => unpacking to docker.io/library/my-web:1.0                           0.7s
-user@4F-73:~/codyssey$ docker images | grep my-web
-my-web:1.0           709489a54fa4        102MB         28.8MB    
+ => => unpacking to docker.io/library/my-web:1.0                           0.0s
+user@4F-73:~/codyssey/2026_01_devSetup$ docker images | grep my-web
+my-web:1.0           f1cdfeba2cd9        102MB         28.8MB   U
 ```
 
 ## 11. 포트 매핑 접속
@@ -463,31 +447,36 @@ f2813e54451b   my-web:1.0   "/docker-entrypoint.…"   About a minute ago   Up A
 
 ## 12. 바인드 마운트 반영
 ```bash
-user@4F-73:~/codyssey/2026_01_devSetup$ docker run -d -p 8082:80 --name my-web-bind \
-    -v "$(pwd)/site":/usr/share/nginx/html my-web:1.0
+user@4F-73:~/codyssey/2026_01_devSetup$ docker run -d -p 8082:80 --name my-web-bind -v "$(pwd)/site":/usr/share/nginx/html my-web:1.0
+873fccfa2f0a558b92c0a239b9b6dd26e7a0842d71907f522b8fca33e4b09a9b
 user@4F-73:~/codyssey/2026_01_devSetup$ curl http://localhost:8082
-(변경 전 출력)
+
+<!DOCTYPE html>
+<html><body><h1>Hello from yeonwoo's devSetup</h1></body></html>
 
 user@4F-73:~/codyssey/2026_01_devSetup$ echo "<h1>bind mount updated</h1>" > site/index.html
 user@4F-73:~/codyssey/2026_01_devSetup$ curl http://localhost:8082
-(변경 후 출력)
+<h1>bind mount updated</h1>
 ```
 - 이미지를 다시 빌드하지 않았는데 호스트 파일 수정이 바로 반영된다 → 컨테이너가 호스트 폴더를 직접 보고 있다.
 
 ## 13. 볼륨 영속성
 ```bash
 user@4F-73:~/codyssey$ docker volume create mydata
+mydata
 user@4F-73:~/codyssey$ docker volume ls
-(출력 붙여넣기)
-
+DRIVER    VOLUME NAME
+local     mydata
 user@4F-73:~/codyssey$ docker run -d --name vol-test -v mydata:/data ubuntu sleep infinity
+89d69344b5125b82ee398a2b0553cf04f47f9493624b564b3251909abb08ee29
 user@4F-73:~/codyssey$ docker exec vol-test bash -lc "echo hi > /data/hello.txt && cat /data/hello.txt"
-(출력 붙여넣기)
+hi
 user@4F-73:~/codyssey$ docker rm -f vol-test
-
+vol-test
 user@4F-73:~/codyssey$ docker run -d --name vol-test2 -v mydata:/data ubuntu sleep infinity
+a4706a171afe3092d9271fdf56a95957cb310ea43c88396c75b978357340c3d2
 user@4F-73:~/codyssey$ docker exec vol-test2 bash -lc "cat /data/hello.txt"
-(출력 붙여넣기)
+hi
 ```
 - 컨테이너(vol-test)를 삭제한 뒤 새 컨테이너(vol-test2)에서도 같은 데이터가 보인다 → 데이터는 컨테이너가 아니라 볼륨에 저장된다.
 
@@ -560,6 +549,45 @@ To https://github.com/yeonwoo7673/2026_01_devSetup.git
 | `run -it ...` | `Command 'run' not found` | `docker` 누락 | `docker run -it ...` |
 | `exec -it ... bash` | `exec: -i: invalid option` | `docker` 누락 → bash 내장 `exec`로 실행 | `docker exec -it ...` |
 | (컨테이너 안에서) `docker stats` | `docker: command not found` | 컨테이너 내부에는 Docker가 없음 | 바깥(WSL)에서 실행 |
+
+### 5) 바인드 마운트 시 403 Forbidden + Permission denied
+- **문제**
+  ```bash
+  user@4F-73:~/codyssey/2026_01_devSetup$ curl http://localhost:8082
+  <head><title>403 Forbidden</title></head>
+  ...
+  user@4F-73:~/codyssey/2026_01_devSetup$ echo "<h1>bind mount updated</h1>" > site/index.html
+  bash: site/index.html: Permission denied
+  ```
+- **원인 가설**: Dockerfile과 `site/`를 저장소 바깥(`~/codyssey`)에 만들고 빌드했다. 그래서 저장소 폴더에는 `site/`가 없었고, `-v "$(pwd)/site":...` 실행 시 Docker가 없는 경로를 **root 소유의 빈 폴더**로 생성했다.
+  - 빈 폴더라 NGINX가 보여 줄 `index.html`이 없음 → 403
+  - root 소유라 일반 사용자가 쓸 수 없음 → Permission denied
+- **확인**
+  ```bash
+  user@4F-73:~/codyssey/2026_01_devSetup$ ls -la
+  drwxr-xr-x 2 root root  4096 Nov 24 16:59 site      ← 소유자 root
+  (Dockerfile 없음)
+  user@4F-73:~/codyssey/2026_01_devSetup$ ls -la ~/codyssey
+  -rw-r--r-- 1 user user  138 Nov 24 16:05 Dockerfile ← 바깥에 있음
+  drwxr-xr-x 2 user user 4096 Nov 24 16:05 site
+  ```
+- **해결**
+  1. `sudo rm -rf site` 시도 → WSL 비밀번호를 잊어서 인증 실패
+  2. 대안: 컨테이너 내부는 root 권한이라는 점을 이용해 컨테이너로 삭제
+     ```bash
+     user@4F-73:~/codyssey/2026_01_devSetup$ docker rm -f my-web-bind
+     my-web-bind
+     user@4F-73:~/codyssey/2026_01_devSetup$ docker run --rm -v "$(pwd)":/w ubuntu rm -rf /w/site
+     ```
+  3. 바깥의 Dockerfile과 site를 저장소로 이동 → 저장소에서 재빌드 → 바인드 마운트 재실행 → 성공
+     ```bash
+     user@4F-73:~/codyssey/2026_01_devSetup$ mv ~/codyssey/Dockerfile ~/codyssey/site .
+     user@4F-73:~/codyssey/2026_01_devSetup$ docker build -t my-web:1.0 .
+     ```
+- **배운 점**
+  - 바인드 마운트할 호스트 경로가 없으면 Docker가 root 소유로 자동 생성한다. 실행 전에 경로가 있는지 확인해야 한다.
+  - `$(pwd)`는 현재 위치 기준이라, 명령을 실행하는 폴더가 결과를 바꾼다.
+  - `docker build`는 위치(빌드 컨텍스트)가 중요하고, `docker run`은 이미 만든 이미지를 쓰므로 위치와 무관하다.
 
 ## 16. 개념 정리
 - **절대 경로 vs 상대 경로**: 절대 경로는 `/`부터 시작하는 전체 경로(`/home/user/codyssey`)라서 어디서 실행해도 같은 위치를 가리킨다. 상대 경로는 현재 위치 기준(`./practice`, `../`)이다. `~`는 홈 디렉토리(`/home/user`)의 축약이다.
