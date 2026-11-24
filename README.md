@@ -286,3 +286,17 @@ CONTAINER ID   IMAGE     COMMAND   CREATED              STATUS          PORTS   
 - `run -it` / `attach`: 컨테이너의 메인 프로세스(bash)에 붙음 → `exit` 하면 메인 프로세스가 끝나서 컨테이너도 종료
 - `exec`: 실행 중인 컨테이너에 **새 프로세스**를 띄움 → `exit` 해도 메인 프로세스는 살아 있어 컨테이너 유지
 ```
+
+9. Git 설정과 푸시
+```
+user@4F-73:~/codyssey$ git config --global user.email "nunung.dev@gmail.com"
+user@4F-73:~/codyssey$ git config --global init.defaultBranch main
+user@4F-73:~/codyssey$ git config --list
+user.email=nunung.dev@gmail.com
+user.name=yeonwooseo
+init.defaultbranch=main
+core.repositoryformatversion=0
+core.filemode=true
+core.bare=false
+core.logallrefupdates=true
+```
