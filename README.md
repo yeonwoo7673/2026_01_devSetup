@@ -27,9 +27,9 @@ VERSION_ID="26.04"
 ![실행 환경](docs/images/01.%20실행환경.png)
 
 > ⚠️ 재현 시 주의
-> - 공용 PC라 관리자 권한이 없어 WSL2 + Docker Desktop(사용자별 설치)으로 구성했다. ([15. 트러블슈팅](#15-트러블슈팅) 참고)
-> - 실습은 WSL의 리눅스 홈(`~`)에서 진행했다. `/mnt/c/...`(Windows 디스크)에서는 `chmod`가 제대로 반영되지 않을 수 있다.
-> - Linux/macOS에서는 Docker Engine만 설치하면 같은 명령으로 재현할 수 있다.
+> - 공용 PC라 관리자 권한이 없어 WSL2 + Docker Desktop(사용자별 설치)으로 구성. ([15. 트러블슈팅](#15-트러블슈팅) 참고)
+> - 실습은 WSL의 리눅스 홈(`~`)에서 진행했다. `/mnt/c/...`(Windows 디스크)에서는 `chmod`가 제대로 반영되지 않을 수 있음.
+> - Linux/macOS에서는 Docker Engine만 설치하면 같은 명령으로 재현 가능.
 
 ## 3. 수행 체크리스트
 - [x] 터미널 기본 조작 및 폴더 구성
@@ -506,8 +506,9 @@ user@4F-73:~/codyssey/2026_01_devSetup$ git push origin main
 To https://github.com/yeonwoo7673/2026_01_devSetup.git
    112e54e..7af0cb0  main -> main
 ```
-![VSCode GitHub 연동](docs/images/vscode-github.png)
-<!-- 왼쪽 아래 WSL: Ubuntu + 계정 아이콘(GitHub 로그인) + 소스 제어 탭이 보이게 캡처 -->
+![VSCode GitHub 연동](docs/images/12-1.vscode-gitHub.png)
+![VSCode GitHub git remote -v, git status](docs/images/12-2.git%20remote%20-v,%20git%20status.png)
+![VSCode GitHub git add . , git commit, git push origin main](docs/images/12-3.git%20add,%20commit,%20push%20origin%20main.png)
 
 ## 15. 트러블슈팅
 
